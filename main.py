@@ -1,5 +1,6 @@
 import sys
 from os import listdir, path
+from datetime import datetime
 
 def main(directory_path):
     dir_path = str(directory_path)
@@ -13,7 +14,12 @@ def main(directory_path):
             print("Items in directory: " + str(len(dir_contents)))
 
             for file in dir_contents:
-                print(file)
+                file_path = dir_path + "/" + file
+                file_size = path.getsize(file_path)
+                modification_datetime = datetime.fromtimestamp(path.getmtime(file_path))
+
+                print(file + " (" + str(file_size) + " bytes)")
+                print("   Modified: " + str(modification_datetime))
     else:
         print("Specified path " + dir_path + " is not a directory.")
 
