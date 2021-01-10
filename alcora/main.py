@@ -18,7 +18,9 @@ def main(directory_path):
                 file_size = path.getsize(file_path)
                 modification_datetime = datetime.fromtimestamp(path.getmtime(file_path))
 
-                print(file + " (" + str(file_size) + " bytes)")
+                print(file + " (" + str(file_size) + " bytes)", end="")
+                print(" [directory]" if path.isdir(file_path) else " [file]")
+
                 print("   Modified: " + str(modification_datetime))
     else:
         print("Specified path " + dir_path + " is not a directory.")
