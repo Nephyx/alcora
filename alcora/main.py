@@ -25,7 +25,11 @@ def main(directory_path):
                     file_count += 1
 
                 print(file + " (" + str(file_size) + " bytes)", end="")
-                print(" [directory]" if path.isdir(file_path) else " [file]")
+
+                if path.isdir(file_path):
+                    print(" [directory]")
+                elif path.isfile(file_path):
+                    print(" [file]")
 
                 print("   Modified: " + str(modification_datetime))
             
