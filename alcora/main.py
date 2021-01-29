@@ -13,6 +13,7 @@ def main(directory_path):
         if len(dir_contents) > 0:
             file_count = 0
             dir_count = 0
+            files_by_ext = {}
 
             for file in dir_contents:
                 file_path = dir_path + "/" + file
@@ -24,6 +25,14 @@ def main(directory_path):
                 elif path.isfile(file_path):
                     file_count += 1
 
+                    file_ext = path.splitext(file_path)[1]
+                    file_ext = "N/A" if not file_ext else file_ext
+
+                    if file_ext in files_by_ext:
+                        files_by_ext[file_ext] += 1
+                    else:
+                        files_by_ext[file_ext] = 1
+
                 print(file + " (" + str(file_size) + " bytes)", end="")
 
                 if path.isdir(file_path):
@@ -33,9 +42,13 @@ def main(directory_path):
 
                 print("   Modified: " + str(modification_datetime))
             
+            print()
             print(('Items in directory: {items} '
                 '({dirs} directories, {files} files)') \
                 .format(items=str(len(dir_contents)), dirs=str(dir_count), files=str(file_count)))
+
+            for ext, c in files_by_ext.items():
+                print(('{extension} - {count}').format(extension=ext, count=c))
     else:
         print("Specified path " + dir_path + " is not a directory.")
 
